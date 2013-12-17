@@ -1,0 +1,16 @@
+# composer
+.buildpath
+composer.lock
+composer.phar
+vendor
+*~
+*#
+# phar
+*.phar
+.DS_Store
+
+# eclipse-pdt
+.settings
+.project
+*.iml
+.idea
