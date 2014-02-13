@@ -5,6 +5,7 @@ var edd_global_vars, form$, error, token, state, error_text, uid;
 
 
 function edd_balanced_response_handler(response) {
+	console.log( response );
 
     if (response.status != 201) {
         // Re-enable the submit button
@@ -77,7 +78,7 @@ function edd_balanced_process_card() {
 
     var creditCardData = {
         card_number:            jQuery('.card-number').val(),
-        expiration_month:       jQuery('.card-expiry-month').val(),
+        expiration_month:       ( '0' + jQuery('.card-expiry-month').val() ).slice( -2 ),
         expiration_year:        jQuery('.card-expiry-year').val(),
         security_code:          jQuery('.card-cvc').val()
     };
