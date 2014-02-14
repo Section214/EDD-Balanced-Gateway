@@ -5,11 +5,11 @@
  * Description:		Adds a payment gateway for balancedpayments.com
  * Version:			1.1.0
  * Author:			Daniel J Griffiths
- * Author URI:		http://ghost1227.com
+ * Author URI:		http://section214.com
  * Text Domain:		edd-balanced-gateway
  *
  * @package			EDD\Gateway\Balanced
- * @author			Daniel J Griffiths <dgriffiths@section214.com
+ * @author			Daniel J Griffiths <dgriffiths@section214.com>
  * @copyright		Copyright (c) 2014, Daniel J Griffiths
  */
 
