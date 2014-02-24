@@ -61,7 +61,7 @@ if( !class_exists( 'EDD_Balanced_Gateway' ) ) {
          */
         private function setup_constants() {
             // Plugin path
-            define( 'BALANCED_PLUGIN_DIR', dirname( __FILE__ ) );
+            define( 'BALANCED_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
             // Plugin URL
             define( 'BALANCED_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -345,24 +345,14 @@ if( !class_exists( 'EDD_Balanced_Gateway' ) ) {
  */
 function EDD_Balanced_Gateway_load() {
     if( !class_exists( 'Easy_Digital_Downloads' ) ) {
-        deactivate_plugins( __FILE__ );
-        unset( $_GET['activate'] );
+        if( !class_exists( 'S214_EDD_Activation' ) ) {
+            require_once( 'includes/class.s214-edd-activation.php' );
+        }
 
-        // Display notice
-        add_action( 'admin_notices', 'EDD_Balanced_Gateway_missing_edd_notice' );
+        $activation = new S214_EDD_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
+        $activation = $activation->run();
     } else {
         return EDD_Balanced_Gateway::instance();
     }
 }
 add_action( 'plugins_loaded', 'EDD_Balanced_Gateway_load' );
-
-
-/**
- * We need Easy Digital Downloads... if it isn't present, notify the user!
- *
- * @since       1.1.0
- * @return      void
- */
-function EDD_Balanced_Gateway_missing_edd_notice() {
-    echo '<div class="error"><p>' . __( 'Balanced Gateway requires Easy Digital Downloads! Please install it to continue!', 'edd-balanced-gateway' ) . '</p></div>';
-}
