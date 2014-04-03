@@ -3,7 +3,7 @@
  * Plugin Name:     Easy Digital Downloads - Balanced Gateway
  * Plugin URI:      https://easydigitaldownloads.com/extension/balanced-payment-gateway
  * Description:     Adds a payment gateway for balancedpayments.com
- * Version:         1.1.0
+ * Version:         1.1.1
  * Author:          Daniel J Griffiths
  * Author URI:      http://section214.com
  * Text Domain:     edd-balanced-gateway
@@ -67,7 +67,7 @@ if( !class_exists( 'EDD_Balanced_Gateway' ) ) {
             define( 'BALANCED_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
             // Plugin version
-            define( 'BALANCED_PLUGIN_VER', '1.1.0' );
+            define( 'BALANCED_PLUGIN_VER', '1.1.1' );
         }
 
 
