@@ -281,12 +281,23 @@ if( !class_exists( 'EDD_Balanced_Gateway' ) ) {
                 $customer->save();
                 $customer->addCard( $_POST['balancedToken'] );
 
-                try{
-                    $amount = number_format( $purchase_data['price'] * 100, 0 );
-                    $result = $customer->debit( edd_sanitize_amount( $amount ) );
+                try {
+                    $amount = $purchase_data['price'] * 100;
+                    $result = $customer->debit( $amount );
+               	} catch (Balanced\Errors\Declined $e) {
+                    edd_set_error( 'card_declined', __( 'Your card was declined!', 'edd-balanced-gateway' ) );
+                    edd_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['edd-gateway'] );
+				}
+				catch (Balanced\Errors\NoFundingSource $e) {
+                    edd_set_error( 'card_declined', __( 'Your card has no funding sources!', 'edd-balanced-gateway' ) );
+                    edd_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['edd-gateway'] );
+				}
+				catch (Balanced\Errors\CannotDebit $e) {
+                    edd_set_error( 'card_declined', __( 'Your card has no funding sources!', 'edd-balanced-gateway' ) );
+                    edd_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['edd-gateway'] );
                 } catch( Exception $e ) {
                     edd_record_gateway_error( __( 'Balanced Error', 'edd-balanced-gateway' ), print_r( $e, true ), 0 );
-                    edd_set_error( 'card_declined', __( 'Your card was declined!', 'edd-balanced-gateway' ) );
+                    edd_set_error( 'balanced_failure', __( 'There was a problem processing your transaction, please try again!', 'edd-balanced-gateway' ) );
                     edd_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['edd-gateway'] );
                 }
 
